@@ -20,3 +20,4 @@ Route::get('/user', 'ErpUserController@test');
 // 设计模式路由
 Route::get('/composite', 'CompositeController@composite'); // 组合模式
 Route::get('/strategy', 'StrategyController@strategy'); // 策略模式
+Route::get('/decorator', 'DecoratorController@decorator'); // 装饰模式
