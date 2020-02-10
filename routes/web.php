@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('/user', 'ErpUserController@test');
+
+// 设计模式路由
+Route::get('/composite', 'CompositeController@composite'); // 组合模式
