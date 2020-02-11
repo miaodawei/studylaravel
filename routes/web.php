@@ -22,3 +22,4 @@ Route::get('/composite', 'CompositeController@composite'); // 组合模式
 Route::get('/strategy', 'StrategyController@strategy'); // 策略模式
 Route::get('/decorator', 'DecoratorController@decorator'); // 装饰模式
 Route::get('/proxy', 'ProxyController@proxy'); // 代理模式
+Route::get('/handlerrequest', 'ChainOfREsponsibilitiesController@handlerRequest'); // 职责链模式
