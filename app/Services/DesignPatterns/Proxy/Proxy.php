@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Proxy;
+namespace App\Services\DesignPatterns\Proxy;
 
 
 class Proxy extends Subject
