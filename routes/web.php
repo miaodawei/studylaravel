@@ -23,3 +23,7 @@ Route::get('/strategy', 'StrategyController@strategy'); // 策略模式
 Route::get('/decorator', 'DecoratorController@decorator'); // 装饰模式
 Route::get('/proxy', 'ProxyController@proxy'); // 代理模式
 Route::get('/handlerrequest', 'ChainOfREsponsibilitiesController@handlerRequest'); // 职责链模式
+
+Route::get('getdata','RedisTestController@getData');
+Route::get('redisJob','RedisTestController@index');
+Route::get('redisJob/run','RedisTestController@runJob');
