@@ -7,7 +7,7 @@ return [
     'listen_ip'                => env('LARAVELS_LISTEN_IP', '127.0.0.1'),
     'listen_port'              => env('LARAVELS_LISTEN_PORT', 5200),
     'socket_type'              => defined('SWOOLE_SOCK_TCP') ? SWOOLE_SOCK_TCP : 1,
-    'enable_coroutine_runtime' => false,
+    'enable_coroutine_runtime' => true,
     'server'                   => env('LARAVELS_SERVER', 'LaravelS'),
     'handle_static'            => env('LARAVELS_HANDLE_STATIC', false),
     'laravel_base_path'        => env('LARAVEL_BASE_PATH', base_path()),
@@ -26,6 +26,17 @@ return [
     ],
     'sockets'                  => [],
     'processes'                => [
+        'test' => [ // key为进程名
+            'class' => \App\Proccess\TestProcess::class,
+            'redirect' => false, // 是否重定向输入输出
+            'pipe' => 1, // 管道类型：0不创建管道，1创建SOCK_STREAM类型管道，2创建SOCK_DGRAM类型管道
+            'enable' => true, // 是否启用，默认true
+            //'queue'    => [ // 启用消息队列作为进程间通信，配置空数组表示使用默认参数
+            //    'msg_key'  => 0,    // 消息队列的KEY，默认会使用ftok(__FILE__, 1)
+            //    'mode'     => 2,    // 通信模式，默认为2，表示争抢模式
+            //    'capacity' => 8192, // 单个消息长度，长度受限于操作系统内核参数的限制，默认为8192，最大不超过65536
+            //],
+        ]
         //[
         //    'class'    => \App\Processes\TestProcess::class,
         //    'redirect' => false, // Whether redirect stdin/stdout, true or false
@@ -34,8 +45,9 @@ return [
         //],
     ],
     'timer'                    => [
-        'enable'        => false,
+        'enable'        => true,
         'jobs'          => [
+//            \App\Jobs\Timer\TestCronJob::class,
             // Enable LaravelScheduleJob to run `php artisan schedule:run` every 1 minute, replace Linux Crontab
             //\Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
             // Two ways to configure parameters:
@@ -72,7 +84,7 @@ return [
         'dispatch_mode'      => 2,
         'reactor_num'        => env('LARAVELS_REACTOR_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 4),
         'worker_num'         => env('LARAVELS_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
-        //'task_worker_num'    => env('LARAVELS_TASK_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
+        'task_worker_num'    => env('LARAVELS_TASK_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
         'task_ipc_mode'      => 1,
         'task_max_request'   => env('LARAVELS_TASK_MAX_REQUEST', 8000),
         'task_tmpdir'        => @is_writable('/dev/shm/') ? '/dev/shm' : '/tmp',
@@ -88,7 +100,7 @@ return [
         'reload_async'       => true,
         'max_wait_time'      => 60,
         'enable_reuse_port'  => true,
-        'enable_coroutine'   => false,
+        'enable_coroutine'   => true,
         'http_compression'   => false,
 
         // Slow log
