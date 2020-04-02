@@ -98,7 +98,7 @@ return [
         'socket_buffer_size' => 128 * 1024 * 1024,
         'package_max_length' => 4 * 1024 * 1024,
         'reload_async'       => true,
-        'max_wait_time'      => 60,
+        'max_wait_time'      => 10,
         'enable_reuse_port'  => true,
         'enable_coroutine'   => true,
         'http_compression'   => false,
