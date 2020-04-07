@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Tests\Test;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
@@ -18,7 +19,11 @@ class TestController extends Controller
 
     public function testCo()
     {
-        $test = new Test();
-        $test->test1();
+//        $test = new Test();
+//        $test->test1();
+
+        return DB::connection('mysql')->table('erp_user')->where('id', 63913)
+            ->get();
+//            ->update(['company_id' => 30]);
     }
 }
