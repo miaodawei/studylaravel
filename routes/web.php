@@ -27,3 +27,5 @@ Route::get('/handlerrequest', 'ChainOfREsponsibilitiesController@handlerRequest'
 Route::get('getdata','RedisTestController@getData');
 Route::get('redisJob','RedisTestController@index');
 Route::get('redisJob/run','RedisTestController@runJob');
+
+Route::get('/testgo','TestController@testCo');

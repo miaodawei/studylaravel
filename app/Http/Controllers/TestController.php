@@ -19,6 +19,6 @@ class TestController extends Controller
     public function testCo()
     {
         $test = new Test();
-        $test->test1();
+        return $test->test2();
     }
 }

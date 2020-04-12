@@ -78,4 +78,20 @@ class Test
 //        });
 
     }
+
+    public function test2()
+    {
+        $datas = [];
+        for($i = 0; $i < 3; $i ++) {
+            go(function() use(&$datas,$i) {
+                $db = DB::connection('mysql');
+                $res = $db->table('posts_two')
+                    ->paginate(1);
+                $db->disconnect();
+                $db->purge();
+                $datas[] = $res;
+            });
+        }
+        return response()->json($datas);
+    }
 }
