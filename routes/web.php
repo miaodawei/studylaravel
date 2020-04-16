@@ -29,3 +29,5 @@ Route::get('redisJob','RedisTestController@index');
 Route::get('redisJob/run','RedisTestController@runJob');
 
 Route::get('/testgo','TestController@testCo');
+Route::get('/testpromise','TestController@testPromise');
+Route::get('/testrejected','TestController@testRejected');

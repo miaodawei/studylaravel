@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Tests\PromiseTest;
 use App\Services\Tests\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,5 +28,17 @@ class TestController extends Controller
 //        return DB::connection('mysql')->table('erp_user')->where('id', 63913)
 //            ->get();
 //            ->update(['company_id' => 30]);
+    }
+
+    public function testPromise()
+    {
+        $s = new PromiseTest();
+        $s->test();
+    }
+
+    public function testRejected()
+    {
+        $s = new PromiseTest();
+        $s->testRejected();;
     }
 }
