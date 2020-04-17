@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Tests\CoroutineTest;
 use App\Services\Tests\PromiseTest;
 use App\Services\Tests\Test;
+use Co\Channel;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Swoole\Coroutine;
+use Swoole\Coroutine\WaitGroup;
 
 class TestController extends Controller
 {
@@ -50,5 +55,37 @@ class TestController extends Controller
     {
         $id = $request->input('id', 0);
         return response()->json($id);
+    }
+
+    public function testBlock()
+    {
+        $start = time();
+        $res = [];
+        for($i = 1; $i < 4; $i ++) {
+            sleep(1);
+            $res['data'][] = $i;
+        }
+        $end = time();
+        $res['seconds'] = ($end - $start).'s';
+        return response()->json($res);
+    }
+
+    public function testCoroutine()
+    {
+        $start = time();
+        $wg = new WaitGroup();
+        $res = [];
+        for($i = 1; $i < 4; $i ++) {
+            $wg->add();
+            go(function() use($i, $wg, &$res) {
+                Coroutine::sleep(1);
+                $res['data'][] = $i;
+                $wg->done();
+            });
+        }
+        $wg->wait();
+        $end = time();
+        $res['seconds'] = ($end - $start).'s';
+        return response()->json($res);
     }
 }
