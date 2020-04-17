@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if ($exception instanceof ValidationException) {
+            $code = $exception->getCode() ? $exception->getCode() : '400';
+            // 只读取错误中的第一个错误信息
+            $errors = $exception->errors();
+            // 框架返回的是二维数组，因此需要去循环读取第一个数据
+            if($errors){
+                foreach ($errors as $key => $val) {
+                    $keys = array_key_first($val);
+                    $message = $val[$keys];
+                    break;
+                }
+            }
+        }elseif ($exception instanceof AuthenticationException) {
+            $code = '400';
+            $message = $exception ->getMessage();
+        }else{
+            $code = $exception->getCode() ? $exception->getCode() : '400';
+            $message = $exception ->getMessage();
+        }
+        return response()->json(['code' => $code, 'message' => $message, 'data' => []]);
+//        return parent::render($request, $exception);
     }
 }

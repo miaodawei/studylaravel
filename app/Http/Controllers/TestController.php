@@ -41,4 +41,14 @@ class TestController extends Controller
         $s = new PromiseTest();
         $s->testRejected();;
     }
+
+    /**
+     * 测试passport授权
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function testPassPortAuth(Request $request)
+    {
+        $id = $request->input('id', 0);
+        return response()->json($id);
+    }
 }

@@ -60,6 +60,7 @@ return [
     'swoole_tables'            => [],
     'register_providers'       => [],
     'cleaners'                 => [
+        \Hhxsv5\LaravelS\Illuminate\Cleaners\AuthCleaner::class
         // If you use the session/authentication/passport in your project
         // Hhxsv5\LaravelS\Illuminate\Cleaners\SessionCleaner::class,
         // Hhxsv5\LaravelS\Illuminate\Cleaners\AuthCleaner::class,
