@@ -18,7 +18,7 @@ class FileController extends Controller
         }
         $filePath = $excel->header($headers);
         $datas = [];
-        for($j = 1; $j <= 100; $j ++) {
+        for($j = 1; $j <= 1000000; $j ++) {
             $row = [];
             for($x = 1; $x < 28; $x ++) {
                 $row[] = 'filed'.$x;
