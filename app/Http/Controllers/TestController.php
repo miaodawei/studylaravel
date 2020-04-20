@@ -44,7 +44,7 @@ class TestController extends Controller
     public function testRejected()
     {
         $s = new PromiseTest();
-        $s->testRejected();;
+        $s->testRejected();
     }
 
     /**

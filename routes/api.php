@@ -26,4 +26,5 @@ Route::middleware(['client'])->group(function () {
 
 Route::any('/testb', 'TestController@testBlock');
 Route::any('/testc', 'TestController@testCoroutine');
+Route::any('/daochu', 'FileController@reportExcel');
 
