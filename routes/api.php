@@ -22,6 +22,8 @@ Route::any('/testco', 'TestController@testCo');
 
 Route::middleware(['client'])->group(function () {
     Route::any('/test_passport_auth', 'TestController@testPassPortAuth');
+    Route::any('/passport_auth', 'TestController@testPassPortAuth');
+    Route::any('/test_user', 'TestController@testGetPassportUser');
 });
 
 Route::any('/testb', 'TestController@testBlock');

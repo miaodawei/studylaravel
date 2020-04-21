@@ -8,6 +8,7 @@ use App\Services\Tests\Test;
 use Co\Channel;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Swoole\Coroutine;
 use Swoole\Coroutine\WaitGroup;
@@ -21,6 +22,19 @@ class TestController extends Controller
         $process->write('TestController: write data' . time());
         $process->write(' #TestController: write data2 ' . microtime(true));
         var_dump($process->read());
+    }
+
+    public function testGetPassportUser(Request $request)
+    {
+        $id = $request->input('id', 0);
+        $result = [
+            "code"=>0,
+            "msg"=>'ok',
+            "data"=>auth("api")->user(),
+            'users' => request()->user(),
+            'aa' => 22
+        ];
+        return response()->json($result);
     }
 
     public function testCo()
@@ -54,7 +68,12 @@ class TestController extends Controller
     public function testPassPortAuth(Request $request)
     {
         $id = $request->input('id', 0);
-        return response()->json($id);
+        $result = [
+            "code"=>0,
+            "msg"=>'ok',
+            "data"=>$id,
+        ];
+        return response()->json($result);
     }
 
     public function testBlock()
