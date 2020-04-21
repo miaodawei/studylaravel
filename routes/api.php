@@ -30,4 +30,6 @@ Route::any('/testb', 'TestController@testBlock');
 Route::any('/testc', 'TestController@testCoroutine');
 Route::any('/daochu', 'FileController@reportExcel');
 Route::any('/daochu2', 'FileController@reportExcel2');
+Route::any('/daochu3', 'FileController@reportExcel3');
+Route::any('/daochu4', 'FileController@reportExcel4');
 
