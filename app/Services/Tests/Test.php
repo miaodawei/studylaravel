@@ -7,6 +7,7 @@ namespace App\Services\Tests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Swoole\Coroutine;
+use Swoole\Coroutine\WaitGroup;
 use Swoole\ExitException;
 use function Co\run;
 use function foo\func;
@@ -93,5 +94,78 @@ class Test
             });
         }
         return response()->json($datas);
+    }
+
+    public function testCo($i)
+    {
+        echo $i.'执行开始'.PHP_EOL;
+        sleep(4);
+        echo $i.'执行结束'.PHP_EOL;
+    }
+
+    public function runCo()
+    {
+        $startTime = time();
+
+        $start1 = time();
+        $this->testCo(1);
+        echo ' 调用1用时：'.(time() - $start1).'s'.PHP_EOL;
+
+        $start2 = time();
+        $this->testCo(2);
+        echo ' 调用2用时：'.(time() - $start2).'s'.PHP_EOL;
+
+        echo '总用时：'.(time() - $startTime).'s'.PHP_EOL;
+    }
+
+    public function runCo2()
+    {
+        go(function() {
+            $startTime = time();
+            $microtime = $this->msectime();
+            go(function() {
+                $start1 = time();
+                $this->testCo(1);
+                echo ' 调用1用时：'.(time() - $start1).'s'.PHP_EOL;
+            });
+            go(function() {
+                $start2 = time();
+                $this->testCo(2);
+                echo ' 调用2用时：'.(time() - $start2).'s'.PHP_EOL;
+            });
+            echo '总用时：'.(time() - $startTime).'s'.' # '.($this->msectime() - $microtime).'ms'.PHP_EOL;
+        });
+        echo 'ok';
+    }
+
+    public function testWaitGroup()
+    {
+        go(function() {
+            $wg = new WaitGroup();
+            $startTime = time();
+            $wg->add();
+            go(function() use($wg) {
+                $start1 = time();
+                $this->testCo(1);
+                echo ' 调用1用时：'.(time() - $start1).'s'.PHP_EOL;
+                $wg->done();
+            });
+            $wg->add();
+            go(function() use($wg) {
+                $start2 = time();
+                $this->testCo(2);
+                echo ' 调用2用时：'.(time() - $start2).'s'.PHP_EOL;
+                $wg->done();
+            });
+            $wg->wait();
+            echo '总用时：'.(time() - $startTime).'s'.PHP_EOL;
+        });
+    }
+
+    public function msectime()
+    {
+        list($usec, $sec) = explode(" ", microtime());
+        return (float)sprintf('%.0f',(floatval($usec)+floatval($sec))*1000);
+//        return ((float)$usec + (float)$sec);
     }
 }

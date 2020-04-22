@@ -93,7 +93,7 @@ class FileController extends Controller
         for($i = 1; $i <= 20; $i ++) {
             $wg->add();
             go(function() use(&$filePath, $wg, $i) {
-                $cli = new Coroutine\Http\Client('127.0.0.1', 9501);
+                $cli = new Coroutine\Http\Client('127.0.0.1', 9505);
                 $cli->get('/filedata');
                 $contents = $cli->body;
                 $cli->close();
@@ -125,7 +125,7 @@ class FileController extends Controller
 //            ->header($headers);
         $http = new Client();
         for($i = 1; $i <= 20; $i ++) {
-            $response = $http->request('POST', 'http://127.0.0.1:9501/filedata');
+            $response = $http->request('POST', 'http://127.0.0.1:9505/filedata');
 //            $response = $http->request('POST', 'http://alkaid.test/api/filedata');
             $contents = $response->getBody()->getContents();
             $contents = json_decode($contents, true);

@@ -107,4 +107,17 @@ class TestController extends Controller
         $res['seconds'] = ($end - $start).'s';
         return response()->json($res);
     }
+
+    public function runCo()
+    {
+        $s = new Test();
+//        $s->runCo();
+        $s->runCo2();
+    }
+
+    public function runCo2()
+    {
+        $s = new Test();
+        $s->testWaitGroup();
+    }
 }
